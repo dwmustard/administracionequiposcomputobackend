@@ -28,6 +28,20 @@ exports.findAll = (req, res) => {
     res.status(404).send(err)
   }); 
 };
+//Validate a single user to login
+exports.validateUser = (req, res) => {
+  let user = req.body;
+  User.findAll({where : {username: user.username,password: user.password}})
+    .then(data => {
+      if (data.length == 0){
+        res.status(403).send('unauthorized');
+      }
+      res.send(data)
+    })
+    .catch(err => {
+      res.status(403).send(err)
+    })
+};
 // Find a single User with an username
 exports.findByUsername = (req, res) => {
   let username1 = req.body.username;

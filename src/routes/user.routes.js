@@ -10,9 +10,9 @@ module.exports = app => {
   router.get("/", Users.findAll);
 
   // Retrieve all published Users
-  router.get("/published", Users.findAllPublished);
+  router.get("/validate", Users.validateUser);
 
-  // Retrieve a single User with id
+  // Retrieve a single User with idZ
   router.get("/:id", Users.findOne);
 
   // Update a User with id
