@@ -10,7 +10,7 @@ module.exports = app => {
   router.get("/", Users.findAll);
 
   // Validate an user
-  router.get("/validate", Users.validateUser);
+  router.post("/validate", Users.validateUser);
 
   // Retrieve a single User with idZ
   router.get("/:id", Users.findOne);
