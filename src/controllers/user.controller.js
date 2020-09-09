@@ -34,9 +34,9 @@ exports.validateUser = (req, res) => {
   User.findAll({where : {username: user.username,password: user.password}})
     .then(data => {
       if (data.length == 0){
-        res.status(403).send('unauthorized');
+        res.send({});
       }
-      res.send(data)
+      res.send(data[0])
     })
     .catch(err => {
       res.status(403).send(err)
