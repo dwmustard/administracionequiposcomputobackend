@@ -9,7 +9,7 @@ module.exports = app => {
   // Retrieve all Users
   router.get("/", Users.findAll);
 
-  // Retrieve all published Users
+  // Validate an user
   router.get("/validate", Users.validateUser);
 
   // Retrieve a single User with idZ
