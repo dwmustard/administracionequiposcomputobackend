@@ -1,6 +1,5 @@
 module.exports = app => {
   const Users = require("../controllers/user.controller.js");
-  const LogUser = require("../controllers/logUser.controller")
 
   var router = require("express").Router();
 
@@ -11,20 +10,13 @@ module.exports = app => {
   router.get("/", Users.findAll);
 
   // Retrieve a single User with idZ
-  router.get("/:id", Users.findOne);
+  router.get("/:username", Users.findUser);
 
   // Update a User with id
-  router.put("/:id", Users.update);
+  router.put("/:username", Users.updateUser);
 
   // Delete a User with id
-  router.delete("/:id", Users.delete);
-
-  // Delete all Users
-  router.delete("/", Users.deleteAll);
-
-  router.post("/login",LogUser.login);
-
-  router.post("/logout",LogUser.logout);
+  router.delete("/:username", Users.deleteUser);
 
   app.use('/user', router);
 };
