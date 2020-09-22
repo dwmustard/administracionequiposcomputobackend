@@ -4,7 +4,7 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  router.get("/userLogs",Roles("User"),Document.userLogfindAll);
+  router.get("/userLogs",Document.userLogfindAll);
 
   router.post("/userLogs/byUser/:username",Roles("User"),Document.userLogfilterByUser);
 
