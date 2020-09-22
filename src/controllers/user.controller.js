@@ -1,81 +1,62 @@
 const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
+const userService = require("../services/user.service");
 
-// Create and Save a new User
 exports.create = (req, res) => {
-  console.log(req.body)
-  const user = {
-    username: req.body.username,
-    password: req.body.password,
-    name: req.body.name
-  } 
-  User.create(user)
-    .then(data => {
+  let user = req.body;
+  userService.create(user)
+    .then(data =>{
       res.send(data);
-    }).catch(err => {
-      res.status(401).send(err)
     })
+    .catch(err => {
+      res.status(400).send(err.message);
+    });
+ 
 };
 
-// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-  User.findAll()
-  .then(data => {
-    res.send(data)
+  userService.findAll()
+    .then(data =>{
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(400).send(err.message);
+    });
+};
+
+exports.findUser = (req, res) => {
+  let username = req.params.username;
+  userService.findByUsername(username)
+    .then(data => {
+      if(data == null){
+        res.status(400).send('User not found');
+      }
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(400).send(err.message);
+    });
+}
+
+exports.updateUser = (req, res) => {
+  let newUser = req.body;
+  newUser.username = req.params.username;
+  userService.update(newUser)
+  .then(data =>{
+    res.send(data);
   })
   .catch(err => {
-    res.status(404).send(err)
-  }); 
-};
-//Validate a single user to login
-exports.validateUser = (req, res) => {
-  let user = req.body;
-  User.findAll({where : {username: user.username,password: user.password}})
-    .then(data => {
-      if (data.length == 0){
-        res.send({});
-      }
-      res.send(data[0])
-    })
-    .catch(err => {
-      res.status(403).send(err)
-    })
-};
-// Find a single User with an username
-exports.findByUsername = (req, res) => {
-  let username1 = req.body.username;
-  User.findAll({where : {username: username1}})
-    .then(data => {
-      res.send(data)
-    })
-    .catch(err => {
-      res.status(403).send(err)
-    })
+    res.status(400).send(err.message);
+  });
 };
 
-
-// Find a single User with an id
-exports.findOne = (req, res) => {
-  
-};
-
-// Update a User by the id in the request
-exports.update = (req, res) => {
-  
-};
-
-// Delete a User with the specified id in the request
-exports.delete = (req, res) => {
-  
-};
-
-// Delete all Users from the database.
-exports.deleteAll = (req, res) => {
-  
-};
-
-// Find all published Users
-exports.findAllPublished = (req, res) => {
-  
+exports.deleteUser = (req, res) => {
+  userService.delete(req.body)
+  .then(data =>{
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(400).send(err.message);
+  });
 };

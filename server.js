@@ -4,34 +4,19 @@ const cors = require("cors");
 
 const app = express();
 
-/*var corsOptions = {
-  origin: 'http://localhost:4200'
-};*/
-
 app.use(cors());
 
-
-// parse requests of content-type - application/json
 app.use(bodyParser.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./src/models");
-db.sequelize.sync();
-
-/*
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-});
-*/
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to elias application." });
-});
+db.sequelize.sync({force:false});
 
 require("./src/routes/user.routes")(app);
-// set port, listen for requests
+require("./src/routes/login.routes")(app);
+require("./src/routes/document.routes")(app);
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
