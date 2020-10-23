@@ -22,6 +22,8 @@ db.sequelize = sequelize;
 db.users= require("./user.model.js")(sequelize, Sequelize);
 db.onlineUser= require("./onlineUser.model")(sequelize, Sequelize);
 db.userLog= require("./userLog.model")(sequelize, Sequelize);
+db.equiment= require("./equiment.model")(sequelize, Sequelize);
+db.repair= require("./repair.model")(sequelize, Sequelize);
 
 
 
